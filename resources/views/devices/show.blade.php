@@ -13,8 +13,8 @@
 
     <div class="card shadow-sm border-0">
         <div class="card-body">
-
-            <h5 class="mb-3">📡 Datos técnicos recibidos (tiempo real)</h5>
+            <p>Tipo: {{ $device->kind }} | Token: <code>{{ $device->token }}</code></p>
+            <h5 class="mb-3">📡 Datos recibidos (tiempo real)</h5>
 
             <!-- Lista scrollable -->
             <div id="dataContainer"

@@ -23,3 +23,8 @@ Route::resource('devices', DeviceController::class);
 
 Route::post('devices/{device}/command', [DeviceController::class,'command'])
     ->name('devices.command');
+
+
+
+Route::get('/devices/{device}/history', [App\Http\Controllers\DeviceController::class, 'history'])
+    ->name('devices.data.history');

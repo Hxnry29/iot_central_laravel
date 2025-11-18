@@ -6,6 +6,9 @@ use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB; 
+use App\Models\DeviceData;
+use Carbon\Carbon;
+
 
 class DeviceController extends Controller
 {   
@@ -96,4 +99,38 @@ class DeviceController extends Controller
         $device->delete();
         return redirect()->route('devices.index')->with('success', 'Dispositivo eliminado');
     }
+
+    public function history(Request $request, $id)
+{
+    $range = $request->query('range', 'all');
+
+    $query = DeviceData::where('device_id', $id);
+
+    // Filtrar por rango seleccionado
+    switch ($range) {
+        case '1h':
+            $query->where('observed_at', '>=', Carbon::now()->subHour());
+            break;
+        case '24h':
+            $query->where('observed_at', '>=', Carbon::now()->subDay());
+            break;
+        case '7d':
+            $query->where('observed_at', '>=', Carbon::now()->subDays(7));
+            break;
+        case '30d':
+            $query->where('observed_at', '>=', Carbon::now()->subDays(30));
+            break;
+        case 'all':
+        default:
+            // sin filtros
+            break;
+    }
+
+    $data = $query->orderBy('observed_at', 'asc')->get();
+
+    return response()->json([
+        'labels' => $data->pluck('observed_at')->map(fn ($d) => $d->format('H:i d/m')),
+        'values' => $data->pluck('value'),
+    ]);
+}
 }

@@ -223,8 +223,7 @@
             <i class="bi bi-cpu"></i><span> Dispositivos</span>
         </a>
 
-        <a href="#"><i class="bi bi-bar-chart"></i><span> Analítica</span></a>
-        <a href="#"><i class="bi bi-gear"></i><span> Configuración</span></a>
+        
     </div>
 
     <!-- ==== CONTENT ==== -->
